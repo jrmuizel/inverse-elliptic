@@ -38,11 +38,6 @@ doublereal gel_(doublereal *u, doublereal *nc, doublereal *mc, doublereal *b,
     /* System generated locals */
     doublereal ret_val;
 
-    /* Local variables */
-    static doublereal m, n;
-
-    n = 1. - *nc;
-    m = 1. - *mc;
     ret_val = *b + *mc * *d__ - 1.;
     return ret_val;
 } /* gel_ */
@@ -55,11 +50,6 @@ doublereal gel1_(doublereal *u, doublereal *nc, doublereal *mc, doublereal *b,
     /* System generated locals */
     doublereal ret_val;
 
-    /* Local variables */
-    static doublereal m, n;
-
-    n = 1. - *nc;
-    m = 1. - *mc;
     ret_val = *b1 + *mc * *d1;
     return ret_val;
 } /* gel1_ */
