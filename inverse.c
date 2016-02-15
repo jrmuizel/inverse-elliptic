@@ -31,29 +31,6 @@ static integer c__1 = 1;
 static doublereal c_b15 = 0.;
 static doublereal c_b20 = 1.;
 
-doublereal gel_(doublereal *u, doublereal *nc, doublereal *mc, doublereal *b, 
-	doublereal *d__, doublereal *j, doublereal *sn, doublereal *cn, 
-	doublereal *dn)
-{
-    /* System generated locals */
-    doublereal ret_val;
-
-    ret_val = *b + *mc * *d__ - 1.;
-    return ret_val;
-} /* gel_ */
-
-doublereal gel1_(doublereal *u, doublereal *nc, doublereal *mc, doublereal *b,
-	 doublereal *d__, doublereal *j, doublereal *sn, doublereal *cn, 
-	doublereal *dn, doublereal *b1, doublereal *d1, doublereal *j1, 
-	doublereal *sn1, doublereal *cn1, doublereal *dn1)
-{
-    /* System generated locals */
-    doublereal ret_val;
-
-    ret_val = *b1 + *mc * *d1;
-    return ret_val;
-} /* gel1_ */
-
 doublereal nigel_(doublereal *nc, doublereal *mc, doublereal *cb, doublereal *
 	cd, doublereal *cj, doublereal *utol, doublereal *ftol, D_fp gel, 
 	D_fp gel1, doublereal *b, doublereal *d__, doublereal *j, doublereal *
