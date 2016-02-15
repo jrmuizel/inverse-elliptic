@@ -27,10 +27,11 @@ doublereal gel1_(doublereal *u, doublereal *nc, doublereal *mc, doublereal *b,
     return ret_val;
 } /* gel1_ */
 
-
 int main()
 {
-	double        nc=1., mc=0.5;
+	double n = 0, m = 0.5;
+
+	double nc = 1. - n, mc = 1. - m;
 	double kc=sqrt(mc);
 	double one = 1., zero = 0.;
 	double cB=cel_(&kc,&one,&one,&zero);
