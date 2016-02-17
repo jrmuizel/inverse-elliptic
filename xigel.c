@@ -52,6 +52,10 @@ double perimeter(double a, double b)
 	return 4*a*cel_(&ec, &one, &one, &e2);
 }
 
+// bigel - the bisection method
+// aigel - the accelerated bisection method
+// nigel - Newton's method using the accelerated bisection method to prepare its starter
+
 int main()
 {
 	double n = 0, m = 0.5;
