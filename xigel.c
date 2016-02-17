@@ -27,10 +27,37 @@ doublereal gel1_(doublereal *u, doublereal *nc, doublereal *mc, doublereal *b,
     return ret_val;
 } /* gel1_ */
 
+double cel(double kc, double p, double a, double b)
+{
+	printf("cel() -> %f\n", cel_(&kc, &p, &a, &b));
+}
+
+double cel2(double k)
+{
+	double one = 1;
+	double k2 = k*k;
+	printf("%f -> %f\n", k, cel_(&k, &one, &one, &k2));
+	printf("%f -> %f\n", k, cel_(&one, &one, &one, &one));
+}
+
+double perimeter(double a, double b)
+{
+	double one = 1;
+	// find the ecentricity
+	double e = sqrt(1-(b/a)*(b/a));
+	// we need the complementary modulus
+	double ec = sqrt(1-e*e);
+	double e2 = ec*ec;
+	printf("%f %f\n", e, cel_(&ec, &one, &one, &e2));
+	return 4*a*cel_(&ec, &one, &one, &e2);
+}
+
 int main()
 {
 	double n = 0, m = 0.5;
-
+	cel(1e-1, 4.1, 1.2, 1.1);
+	cel(1e-1, -4.1, 1.2, 1.1);
+	cel2(1);
 	double nc = 1. - n, mc = 1. - m;
 	double kc=sqrt(mc);
 	double one = 1., zero = 0.;
@@ -39,6 +66,9 @@ int main()
 	double cJ=cel_(&kc,&nc,&zero,&one);
 	double phi, u, B, D, J, f, sn, cn, dn;
 	double error = 1.-15;
+	double a = 5;
+	double b = 4;
+	printf("%f %f -> %f\n", a, b, perimeter(a, b));
 	arc_length = 1;
 	u=aigel_(&nc,&mc,&cB,&cD,&cJ,&error,&error,gel_,&B,&D,&J,&sn,&cn,&dn,&f);
 	phi=atan2(sn,cn);
