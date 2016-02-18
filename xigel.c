@@ -58,7 +58,9 @@ double perimeter(double a, double b)
 
 int main()
 {
-	double n = 0, m = 0.5;
+	double a = 2;
+	double b = 1;
+	double n = 0, m = 1-0.25;
 	cel(1e-1, 4.1, 1.2, 1.1);
 	cel(1e-1, -4.1, 1.2, 1.1);
 	cel2(1);
@@ -70,19 +72,39 @@ int main()
 	double cJ=cel_(&kc,&nc,&zero,&one);
 	double phi, u, B, D, J, f, sn, cn, dn;
 	double error = 1.-15;
-	double a = 5;
-	double b = 4;
-	printf("%f %f -> %f\n", a, b, perimeter(a, b));
-	arc_length = 1;
+	printf("%f %f -> %f\n", a, b, perimeter(a, b)/4);
+	printf("%f %f -> %f\n", a, b, perimeter(a, b)/4);
+	double quarter_perimeter = perimeter(a, b)/4;
+	arc_length = 0.5;
 	u=aigel_(&nc,&mc,&cB,&cD,&cJ,&error,&error,gel_,&B,&D,&J,&sn,&cn,&dn,&f);
 	phi=atan2(sn,cn);
 	printf("%12s %f %f\n", "accelerated:", phi, u);
 	arc_length = 0;
 	for (int i = 0; i < 150; i++) {
-		arc_length = i*9.2/149;
+		double length = i*9.2/149;
+		double ssn;
+		double scn;
+		length = fmod(length, quarter_perimeter*2);
+		if (length < quarter_perimeter/2) {
+			arc_length = length;
+			ssn = 1;
+			scn = 1;
+		} else if (length < quarter_perimeter) {
+			arc_length = quarter_perimeter - length;
+			ssn = 1;
+			scn = -1;
+		} else if (length < quarter_perimeter*3/2) {
+			arc_length = length - quarter_perimeter;
+			ssn = -1;
+			scn = -1;
+		} else {
+			arc_length = quarter_perimeter*2 - length;
+			ssn = -1;
+			scn = 1;
+		}
 		u=nigel_(&nc,&mc,&cB,&cD,&cJ,&error,&error,gel_,gel1_,&B,&D,&J,&sn,&cn,&dn,&f);
 		phi=atan2(sn,cn);
-		printf("%12s %f %f %f %f %f\n", "Newton:",arc_length, phi,u, 2*sn, cn);
+		printf("%12s %f %f %f %f %f\n", "Newton:",arc_length, phi,u, ssn*a*sn, scn*cn);
 	}
 }
 
