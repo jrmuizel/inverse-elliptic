@@ -29,15 +29,15 @@ doublereal gel1_(doublereal *u, doublereal *nc, doublereal *mc, doublereal *b,
 
 double cel(double kc, double p, double a, double b)
 {
-	printf("cel() -> %f\n", cel_(&kc, &p, &a, &b));
+	//printf("cel() -> %f\n", cel_(&kc, &p, &a, &b));
 }
 
 double cel2(double k)
 {
 	double one = 1;
 	double k2 = k*k;
-	printf("%f -> %f\n", k, cel_(&k, &one, &one, &k2));
-	printf("%f -> %f\n", k, cel_(&one, &one, &one, &one));
+	//printf("%f -> %f\n", k, cel_(&k, &one, &one, &k2));
+	//printf("%f -> %f\n", k, cel_(&one, &one, &one, &one));
 }
 
 double perimeter(double a, double b)
@@ -48,7 +48,6 @@ double perimeter(double a, double b)
 	// we need the complementary modulus
 	double ec = sqrt(1-e*e);
 	double e2 = ec*ec;
-	printf("%f %f\n", e, cel_(&ec, &one, &one, &e2));
 	return 4*a*cel_(&ec, &one, &one, &e2);
 }
 
@@ -60,7 +59,7 @@ int main()
 {
 	double a = 2;
 	double b = 1;
-	double n = 0, m = 1-0.25;
+	double n = 0, m = 1-(b*b)/(a*a);
 	cel(1e-1, 4.1, 1.2, 1.1);
 	cel(1e-1, -4.1, 1.2, 1.1);
 	cel2(1);
@@ -72,19 +71,23 @@ int main()
 	double cJ=cel_(&kc,&nc,&zero,&one);
 	double phi, u, B, D, J, f, sn, cn, dn;
 	double error = 1.-15;
-	printf("%f %f -> %f\n", a, b, perimeter(a, b)/4);
-	printf("%f %f -> %f\n", a, b, perimeter(a, b)/4);
-	double quarter_perimeter = perimeter(a, b)/4;
+	//printf("%f %f -> %f\n", a, b, perimeter(a, b)/4);
+	//printf("%f %f -> %f\n", a, b, perimeter(a, b)/4);
+	double p = perimeter(a, b);
+	double quarter_perimeter = p/4;
 	arc_length = 0.5;
 	u=aigel_(&nc,&mc,&cB,&cD,&cJ,&error,&error,gel_,&B,&D,&J,&sn,&cn,&dn,&f);
 	phi=atan2(sn,cn);
-	printf("%12s %f %f\n", "accelerated:", phi, u);
+	//printf("%12s %f %f\n", "accelerated:", phi, u);
 	arc_length = 0;
-	for (int i = 0; i < 150; i++) {
-		double length = i*9.2/149;
+        double total_length = 0;
+        int i = 0;
+	do {
+                i++;
+		total_length = i*(p/50);
 		double ssn;
 		double scn;
-		length = fmod(length, quarter_perimeter*2);
+		double length = fmod(total_length, quarter_perimeter*2);
 		if (length < quarter_perimeter/2) {
 			arc_length = length;
 			ssn = 1;
@@ -104,8 +107,9 @@ int main()
 		}
 		u=nigel_(&nc,&mc,&cB,&cD,&cJ,&error,&error,gel_,gel1_,&B,&D,&J,&sn,&cn,&dn,&f);
 		phi=atan2(sn,cn);
-		printf("%12s %f %f %f %f %f\n", "Newton:",arc_length, phi,u, ssn*a*sn, scn*cn);
-	}
+		//printf("%12s %f %f %f %f %f\n", "Newton:",arc_length, phi,u, ssn*a*sn, scn*cn);
+		printf("%f %f\n", ssn*a*sn, scn*cn);
+	} while (total_length*2 < p);
 }
 
 
