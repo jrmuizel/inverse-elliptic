@@ -84,7 +84,7 @@ int main()
 			scn = 1;
 		}
 		u=nigel_(&nc,&mc,&cB,&cD,&cJ,&error,&error,gel_,gel1_,&B,&D,&J,&sn,&cn,&dn,&f);
-		phi=atan2(sn,cn);
+		//phi=atan2(sn,cn);
 		//printf("%12s %f %f %f %f %f\n", "Newton:",arc_length, phi,u, ssn*a*sn, scn*cn);
 		printf("%f %f\n", ssn*a*sn, scn*b*cn);
 	} while (total_length < p);
