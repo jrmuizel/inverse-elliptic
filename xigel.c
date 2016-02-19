@@ -57,8 +57,8 @@ double perimeter(double a, double b)
 
 int main()
 {
-	double a = 2;
-	double b = 1;
+	double a = 3;
+	double b = 2;
 	double n = 0, m = 1-(b*b)/(a*a);
 	cel(1e-1, 4.1, 1.2, 1.1);
 	cel(1e-1, -4.1, 1.2, 1.1);
@@ -82,34 +82,35 @@ int main()
 	arc_length = 0;
         double total_length = 0;
         int i = 0;
+        int number_of_points = 35;
 	do {
                 i++;
-		total_length = i*(p/50);
+		total_length = i*(p/number_of_points);
 		double ssn;
 		double scn;
-		double length = fmod(total_length, quarter_perimeter*2);
-		if (length < quarter_perimeter/2) {
-			arc_length = length;
+		double length = fmod(total_length, p);
+		if (length < quarter_perimeter) {
+			arc_length = length/a;
 			ssn = 1;
 			scn = 1;
-		} else if (length < quarter_perimeter) {
-			arc_length = quarter_perimeter - length;
+		} else if (length < quarter_perimeter*2) {
+			arc_length = (quarter_perimeter*2 - length)/a;
 			ssn = 1;
 			scn = -1;
-		} else if (length < quarter_perimeter*3/2) {
-			arc_length = length - quarter_perimeter;
+		} else if (length < quarter_perimeter*3) {
+			arc_length = (length - quarter_perimeter*2)/a;
 			ssn = -1;
 			scn = -1;
 		} else {
-			arc_length = quarter_perimeter*2 - length;
+			arc_length = (p - length)/a;
 			ssn = -1;
 			scn = 1;
 		}
 		u=nigel_(&nc,&mc,&cB,&cD,&cJ,&error,&error,gel_,gel1_,&B,&D,&J,&sn,&cn,&dn,&f);
 		phi=atan2(sn,cn);
 		//printf("%12s %f %f %f %f %f\n", "Newton:",arc_length, phi,u, ssn*a*sn, scn*cn);
-		printf("%f %f\n", ssn*a*sn, scn*cn);
-	} while (total_length*2 < p);
+		printf("%f %f\n", ssn*a*sn, scn*b*cn);
+	} while (total_length < p);
 }
 
 
