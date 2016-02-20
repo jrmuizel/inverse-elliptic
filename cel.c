@@ -3,21 +3,18 @@
 
 /*     Returns the general complete elliptic integral */
 
-double cel(double qqc, double pp, double aa, double bb)
+double cel(double qqc, double p, double a, double b)
 {
     /* System generated locals */
     double ret_val, d__1;
 
     /* Local variables */
-    double a, b, e, f, g, p, q, em, qc;
+    double e, f, g, q, em, qc;
 
     if (qqc == 0.f) {
 //	s_paus("failure in CEL", (ftnlen)14);
     }
     qc = fabs(qqc);
-    a = aa;
-    b = bb;
-    p = pp;
     e = qc;
     em = 1.f;
     if (p > 0.f) {
@@ -50,5 +47,5 @@ L1:
     }
     ret_val = (b + a * em) * 1.5707963268f / (em * (em + p));
     return ret_val;
-} /* cel_ */
+}
 
