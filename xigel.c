@@ -27,28 +27,27 @@ doublereal gel1_(doublereal *u, doublereal *nc, doublereal *mc, doublereal *b,
     return ret_val;
 } /* gel1_ */
 
-double cel(double kc, double p, double a, double b)
+double pcel(double kc, double p, double a, double b)
 {
-	//printf("cel() -> %f\n", cel_(&kc, &p, &a, &b));
+	//printf("cel() -> %f\n", cel(&kc, &p, &a, &b));
 }
 
 double cel2(double k)
 {
 	double one = 1;
 	double k2 = k*k;
-	//printf("%f -> %f\n", k, cel_(&k, &one, &one, &k2));
-	//printf("%f -> %f\n", k, cel_(&one, &one, &one, &one));
+	//printf("%f -> %f\n", k, cel(&k, &one, &one, &k2));
+	//printf("%f -> %f\n", k, cel(&one, &one, &one, &one));
 }
 
 double perimeter(double a, double b)
 {
-	double one = 1;
 	// find the ecentricity
 	double e = sqrt(1-(b/a)*(b/a));
 	// we need the complementary modulus
 	double ec = sqrt(1-e*e);
 	double e2 = ec*ec;
-	return 4*a*cel_(&ec, &one, &one, &e2);
+	return 4*a*cel(ec, 1., 1., e2);
 }
 
 // bigel - the bisection method
@@ -60,15 +59,14 @@ int main()
 	double a = 3;
 	double b = 2;
 	double n = 0, m = 1-(b*b)/(a*a);
-	cel(1e-1, 4.1, 1.2, 1.1);
-	cel(1e-1, -4.1, 1.2, 1.1);
+	pcel(1e-1, 4.1, 1.2, 1.1);
+	pcel(1e-1, -4.1, 1.2, 1.1);
 	cel2(1);
 	double nc = 1. - n, mc = 1. - m;
 	double kc=sqrt(mc);
-	double one = 1., zero = 0.;
-	double cB=cel_(&kc,&one,&one,&zero);
-	double cD=cel_(&kc,&one,&zero,&one);
-	double cJ=cel_(&kc,&nc,&zero,&one);
+	double cB=cel(kc,1.,1.,0.);
+	double cD=cel(kc,1.,0.,1.);
+	double cJ=cel(kc,nc,0.,1.);
 	double phi, u, B, D, J, f, sn, cn, dn;
 	double error = 1.-15;
 	//printf("%f %f -> %f\n", a, b, perimeter(a, b)/4);

@@ -36,5 +36,4 @@ doublereal aigel_(doublereal *nc, doublereal *mc, doublereal *cb, doublereal *
 	doublereal *b, doublereal *d__, doublereal *j, doublereal *sn, 
 	doublereal *cn, doublereal *dn, doublereal *f);
 
-doublereal cel_(doublereal *qqc, doublereal *pp, doublereal *aa, doublereal *
-	bb);
+double cel(double qqc, double pp, double aa, double bb);

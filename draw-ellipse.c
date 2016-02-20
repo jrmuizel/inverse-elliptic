@@ -29,13 +29,12 @@ doublereal gel1_(doublereal *u, doublereal *nc, doublereal *mc, doublereal *b,
 
 double perimeter(double a, double b)
 {
-	double one = 1;
 	// find the ecentricity
 	double e = sqrt(1-(b/a)*(b/a));
 	// we need the complementary modulus
 	double ec = sqrt(1-e*e);
 	double e2 = ec*ec;
-	return 4*a*cel_(&ec, &one, &one, &e2);
+	return 4*a*cel(ec, 1., 1., e2);
 }
 
 // bigel - the bisection method
@@ -49,10 +48,9 @@ int main()
 	double n = 0, m = 1-(b*b)/(a*a);
 	double nc = 1. - n, mc = 1. - m;
 	double kc=sqrt(mc);
-	double one = 1., zero = 0.;
-	double cB=cel_(&kc,&one,&one,&zero);
-	double cD=cel_(&kc,&one,&zero,&one);
-	double cJ=cel_(&kc,&nc,&zero,&one);
+	double cB=cel(kc, 1., 1., 0.);
+	double cD=cel(kc, 1., 0., 1.);
+	double cJ=cel(kc, nc, 0., 1.);
 	double u, B, D, J, f, sn, cn, dn;
 	double error = 1.-15;
 	double p = perimeter(a, b);
